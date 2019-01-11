@@ -5,6 +5,7 @@
 class Joueur{
   int gold;
 public:
+  Joueur():gold(0){}
   Joueur(int argent):gold(argent){}
   ~Joueur(){}
 

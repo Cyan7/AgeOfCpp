@@ -3,6 +3,7 @@
 #include <vector>
 #include "Entite.hpp"
 #include "Joueur.hpp"
+#include <string>
 
 
 class Terrain{
@@ -10,7 +11,7 @@ class Terrain{
 	std::vector<Entite> mesEntites;
 	std::vector<Joueur> mesJoueurs;
 	
-	Terrain(bool deuxJoueurs, bool charger, String fichierSauvegarde){
+	Terrain(bool deuxJoueurs, bool charger, string fichierSauvegarde){
 		if (!charger){
 			if (deuxJoueurs){
 				Joueur joueurA;
