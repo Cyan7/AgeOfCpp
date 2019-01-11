@@ -4,6 +4,7 @@
 #include "Unite.hpp"
 
 class Catapulte : public Unite{
+public:
   Catapulte(int ptVie, int posi, joueurEnum j, int p, int attaque,std::vector<int> v) : Unite(ptVie, posi,j,p,attaque,v){}
   ~Catapulte(){}
 

@@ -1,7 +1,7 @@
 #ifndef ENTITE_H
 #define ENTITE_H
 
-enum joueurEnum { joueurA, joueurB };
+enum joueurEnum { jA, jB };
 
 class Entite {
   int pv, position;
@@ -24,7 +24,7 @@ public :
   //afficher
   void afficher();
   //mourir
-  virtual void mourir()=0;//doit donner de l'argent au joueur qui l'a tuée
+  virtual void mourir(){};//doit donner de l'argent au joueur qui l'a tuée
 };
 
 #endif

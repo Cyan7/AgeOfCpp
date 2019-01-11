@@ -1,12 +1,12 @@
 CXX=g++
 CXXFLAGS= -Wall -Wextra -std=c++11 #-Werror
-DEPS = jeu.hpp Entite.hpp Unite.hpp Base.hpp Catapulte.hpp Joueur.hpp Humain.hpp IA.hpp
+DEPS = jeu.hpp Terrain.hpp Entite.hpp Unite.hpp Base.hpp Catapulte.hpp Archer.hpp Fantassin.hpp Joueur.hpp Humain.hpp IA.hpp
 
 %.o: %.cpp $(DEPS)
 	$(CXX) $(CXXFLAGS) $< -c -o $@
 
 
-jeu: jeu.o Entite.o Unite.o Base.o Catapulte.o Joueur.o Humain.o IA.o
+jeu: jeu.o Terrain.o Entite.o Unite.o Base.o Catapulte.o Archer.o Fantassin.hpp Joueur.o Humain.o IA.o
 	$(CXX) $^ -o $@
 
 .PHONY: clean

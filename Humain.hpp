@@ -3,6 +3,7 @@
 #include "Joueur.hpp"
 
 class Humain : public Joueur{
+public:
   Humain(int argent):Joueur(argent){}
   ~Humain(){}
 };
