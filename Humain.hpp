@@ -4,7 +4,7 @@
 
 class Humain : public Joueur{
 public:
-  Humain(int argent):Joueur(argent){}
+  Humain():Joueur(10){}
   ~Humain(){}
 };
 
