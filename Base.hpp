@@ -8,7 +8,7 @@ public:
   Base(joueurEnum j):Entite(100,j==jA?0:11,j){}
   ~Base(){}
 
-  Unite* creerUnite(int i);
+  Unite* creerUnite(unitEnum u);
 };
 
 #endif

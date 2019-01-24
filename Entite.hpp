@@ -4,6 +4,7 @@
 enum joueurEnum { jA, jB };
 
 class Entite {
+protected:
   int pv, position;
   joueurEnum joueur;
 

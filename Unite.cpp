@@ -22,6 +22,10 @@ void Unite::setPortee(int* v){
   portee=v;
 }
 
+void Unite::attaquer(Entite& e){
+  e.setPV(e.getPV()-this->getPtAttaque());
+}
+
 void Unite::avancer(){
   //TODO
 }

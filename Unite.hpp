@@ -3,6 +3,8 @@
 #include <vector>
 #include "Entite.hpp"
 
+enum unitEnum {fantassin, archer, catapulte};
+
 class Unite: public Entite{
   int prix,ptAttaque;
   int* portee;
@@ -20,7 +22,7 @@ public:
   void setPtAttaque(int attaque);
   void setPortee(int* v);
 
-  virtual void attaquer(Entite& e){};
+  void attaquer(Entite& e);
   void avancer();
 };
 
