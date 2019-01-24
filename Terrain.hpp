@@ -18,6 +18,8 @@ class Terrain{
 			if (deuxJoueurs){
 				Joueur joueurA;
 				Joueur joueurB;
+				mesJoueurs.push_back(joueurA);
+				mesJoueurs.push_back(joueurB);
 				Base baseA(100, 0, jA);
 				Base baseB(100, 11, jB);
 

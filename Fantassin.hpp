@@ -6,7 +6,7 @@
 class Fantassin : public Unite{
   bool superSoldat;
 public:
-  Fantassin(int ptVie, int posi, joueurEnum j, int p, int attaque,std::vector<int> v) :
+  Fantassin(int ptVie, int posi, joueurEnum j, int p, int attaque,int* v) :
     Unite(ptVie, posi,j,p,attaque,v){superSoldat=false;}
   ~Fantassin(){}
 

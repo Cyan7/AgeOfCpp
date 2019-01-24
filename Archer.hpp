@@ -3,9 +3,11 @@
 #include "Entite.hpp"
 #include "Unite.hpp"
 
+int p[3]={1,2,3};
+
 class Archer : public Unite{
 public:
-  Archer(int ptVie, int posi, joueurEnum j, int p, int attaque,std::vector<int> v) : Unite(ptVie, posi,j,p,attaque,v){}
+  Archer(joueurEnum j) : Unite(8, j==jA?1:10,j,12,3,p){}
   ~Archer(){}
 
   void attaquer(Entite& e);
