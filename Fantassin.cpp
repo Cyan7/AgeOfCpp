@@ -11,6 +11,9 @@ void Fantassin::promouvoir(){
   if(this.isSuperSoldat()){
     printf("Déjà super soldat\n");
   }
+  else{
+    this.superSoldat = true;
+  }
 }
 
 void Fantassin::attaquer(Entite& e){

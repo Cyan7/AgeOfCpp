@@ -9,7 +9,7 @@ class Fantassin : public Unite{
   bool superSoldat;
 public:
   Fantassin(joueurEnum j) :
-    Unite(10, j==jA?1:10,j,10,4,p){superSoldat=false;}
+    Unite(10, j==jA?0:11,j,10,4,p){superSoldat=false;}
   ~Fantassin(){}
 
   bool isSuperSoldat();
