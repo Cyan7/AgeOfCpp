@@ -16,13 +16,24 @@ class Terrain{
 	Terrain(bool deuxJoueurs, bool charger, std::string fichierSauvegarde){
 		if (!charger){
 			if (deuxJoueurs){
-				Joueur joueurA;
-				Joueur joueurB;
+				Humain joueurA;
+				Humain joueurB;
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
-				Base baseA(100, 0, jA);
-				Base baseB(100, 11, jB);
-
+				Base baseA(jA);
+				Base baseB(jB);
+				mesEntites.push_back(baseA);
+				mesEntites.push_back(baseB);
+			}
+			if (!deuxJoueurs){
+				Humain joueurA;
+				IA joueurB;
+				mesJoueurs.push_back(joueurA);
+				mesJoueurs.push_back(joueurB);
+				Base baseA(jA);
+				Base baseB(jB);
+				mesEntites.push_back(baseA);
+				mesEntites.push_back(baseB);
 			}
 		}
 
@@ -32,7 +43,7 @@ class Terrain{
 
 
 	public :
-		Terrain getInstance();
+		Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
 		void afficher();
 		int ajouterUnite(Unite& u);
 
