@@ -3,7 +3,7 @@
 #include "Joueur.hpp"
 class IA: public Joueur{
 public:
-  IA(int argent):Joueur(argent){}
+  IA():Joueur(10){}
   ~IA(){}
 };
 
