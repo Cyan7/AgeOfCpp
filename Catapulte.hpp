@@ -3,9 +3,11 @@
 #include "Entite.hpp"
 #include "Unite.hpp"
 
+int p[3]={2,3,4};
+
 class Catapulte : public Unite{
 public:
-  Catapulte(int ptVie, int posi, joueurEnum j, int p, int attaque,int* v) : Unite(ptVie, posi,j,p,attaque,v){}
+  Catapulte(joueurEnum j) : Unite(12, j==jA?1:10,j,20,6,p){}
   ~Catapulte(){}
 
   void attaquer(Entite& e);

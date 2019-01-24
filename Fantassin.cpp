@@ -1,12 +1,18 @@
 #include <cstdlib>
 #include <iostream>
-#include "Archer.hpp"
+#include "Fantassin.hpp"
 #include "Entite.hpp"
 
-bool Archer::isSuperSoldat(){
+bool Fantassin::isSuperSoldat(){
   return superSoldat;
 }
 
-void Archer::attaquer(Entite& e){
+void Fantassin::promouvoir(){
+  if(this.isSuperSoldat()){
+    printf("Déjà super soldat\n");
+  }
+}
+
+void Fantassin::attaquer(Entite& e){
   //TODO
 }

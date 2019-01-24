@@ -5,7 +5,7 @@
 
 class Base: public Entite{
 public:
-  Base(int ptVie, int posi, joueurEnum j):Entite(ptVie,posi,j){}
+  Base(joueurEnum j):Entite(100,j==jA?0:11,j){}
   ~Base(){}
 
   Unite* creerUnite(int i);
