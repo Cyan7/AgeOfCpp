@@ -23,9 +23,7 @@ public :
   void setPosition(int posi);
   void setJoueur(joueurEnum j);
   //afficher
-  void afficher();
-  //mourir
-  virtual void mourir(){};//doit donner de l'argent au joueur qui l'a tuée
+  virtual void afficher(){};
 };
 
 #endif

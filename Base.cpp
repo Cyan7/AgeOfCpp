@@ -6,6 +6,12 @@
 #include "Archer.hpp"
 #include "Catapulte.hpp"
 
+void Base::afficher(){
+  char a = joueur ==jA ? 'A' : 'B';
+  std::cout << "Base" << a << std::endl;
+  //TODO : afficher les pv
+}
+
 Unite* Base::creerUnite(unitEnum u){
   Unite* unit;
   switch(u){

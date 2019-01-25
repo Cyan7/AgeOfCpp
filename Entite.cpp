@@ -22,7 +22,3 @@ void Entite::setPosition(int posi){
 void Entite::setJoueur(joueurEnum j){
   joueur = j;
 }
-
-void Entite::afficher(){
-  //TODO
-}

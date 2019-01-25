@@ -23,7 +23,7 @@ public:
   void setPortee(int* v);
 
   void attaquer(Entite& e);
-  void avancer();
+  void avancer(); // change position de l'unité ; print erreur si position hors du terrain
 };
 
 #endif
