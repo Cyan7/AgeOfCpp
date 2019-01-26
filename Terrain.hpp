@@ -51,12 +51,7 @@ class Terrain{
 		~Terrain(){}
 
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
-<<<<<<< HEAD
-		void afficher();
 		bool creerUnite(joueurEnum j, unitEnum type);
-=======
-		bool creerUnite(Base b, unitEnum type);
->>>>>>> 6d19e483d1110cfee8a29e09473efdfbb45ea144
 		void update();
 		Entite* cible(Unite u) const;
 		void afficherTerrain();
