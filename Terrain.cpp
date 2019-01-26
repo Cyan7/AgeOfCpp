@@ -2,7 +2,9 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <string>
 #include "Terrain.hpp"
+#include "Unite.hpp"
 
 Terrain *Terrain::monTerrain = nullptr;
 
@@ -14,22 +16,26 @@ Terrain Terrain::getInstance(bool deuxJoueurs, bool charger, std::string fichier
   return *monTerrain;
 }
 
-bool Terrain::creerUnite(Base b, unitEnum type){
-  switch(b.getJoueur()){
+bool Terrain::creerUnite(joueurEnum j, unitEnum type){
+  switch(j){
     case jA:
+      Base& ba = dynamic_cast<Base&>(mesEntitesA.at(0));
       if(mesJoueurs.at(0).creerUnite(type)){
-        Entite e = (Entite) *(b.creerUnite(type));
+        Entite e = (Entite) *(ba.creerUnite(type));
         mesEntitesA.push_back(e);
         return true;
       }
       return false;
+      break;
     case jB:
+      Base& bb = dynamic_cast<Base&>(mesEntitesB.at(0))
       if(mesJoueurs.at(1).creerUnite(type)){
-        Entite e = (Entite) *(b.creerUnite(type));
+        Entite e = (Entite) *(bb.creerUnite(type));
         mesEntitesB.push_back(e);
         return true;
       }
-    return false;
+      return false;
+      break;
   }
   return false;
 }
@@ -82,5 +88,8 @@ void Terrain::afficherTerrain(){
 }
 
 int main(){
+  Terrain terrain = Terrain::getInstance(true, false, "");
+  unitEnum fA = fantassin;
+  terrain.creerUnite(terrain.mesEntitesA().at(0),fA);
   std::cout << "gg" << std::endl;
 }
