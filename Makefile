@@ -6,7 +6,7 @@ DEPS = jeu.hpp Terrain.hpp Entite.hpp Unite.hpp Base.hpp Catapulte.hpp Archer.hp
 	$(CXX) $(CXXFLAGS) $< -c -o $@
 
 
-jeu: jeu.o Terrain.o Entite.o Unite.o Base.o Catapulte.o Archer.o Fantassin.o Joueur.o Humain.o IA.o
+jeu: Terrain.o Entite.o Unite.o Base.o Catapulte.o Archer.o Fantassin.o Joueur.o Humain.o IA.o
 	$(CXX) $^ -o $@
 
 .PHONY: clean
