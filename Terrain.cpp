@@ -107,7 +107,8 @@ void Terrain::afficherTerrain(){
 
 int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
+  joueurEnum jouA = jA;
   unitEnum fA = fantassin;
-  terrain.creerUnite(terrain.mesEntitesA().at(0),fA);
+  terrain.creerUnite(jA,fA);
   std::cout << "gg" << std::endl;
 }
