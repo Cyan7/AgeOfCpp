@@ -12,6 +12,7 @@ public:
   }
   ~Catapulte(){}
 
+  void afficher();
 };
 
 #endif

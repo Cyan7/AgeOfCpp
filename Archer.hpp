@@ -12,6 +12,7 @@ public:
   }
   ~Archer(){}
 
+  void afficher();
 };
 
 #endif

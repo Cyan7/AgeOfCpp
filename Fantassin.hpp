@@ -17,6 +17,8 @@ public:
   bool isSuperSoldat();
 
   void promouvoir();
+
+  void afficher();
 };
 
 #endif
