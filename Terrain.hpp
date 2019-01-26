@@ -1,5 +1,4 @@
-#ifndef TERRAIN_H
-#define TERRAIN_H
+#pragma once
 #include <vector>
 #include "Joueur.hpp"
 #include "Entite.hpp"
@@ -52,8 +51,7 @@ class Terrain{
 		void update();
 		bool peutAttaquer(Unite u) const;
 		Entite cible(Unite u) const;
+		void afficherTerrain();
 
 
 };
-
-#endif

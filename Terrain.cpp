@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
+#include <vector>
 #include "Terrain.hpp"
 
 Terrain *Terrain::monTerrain = nullptr;
@@ -34,4 +36,29 @@ bool Terrain::creerUnite(Base b, unitEnum type){
 
 bool Terrain::peutAttaquer(Unite u) const{
 
+}
+
+void Terrain::afficherTerrain(){
+  //on range les entités dans leur ordre de position
+  std::vector<Entite> casesTerrain;
+  for(Entite eA : mesEntitesA){
+    casesTerrain.insert(casesTerrain.begin()+eA.getPosition(),eA);
+  }
+  for(Entite eB : mesEntitesB){
+    casesTerrain.insert(casesTerrain.begin()+eB.getPosition(),eB);
+  }
+  //on parcourt casesTerrain pour afficher les PV puis l'entité
+  for(Entite e : casesTerrain){
+    std::cout << std::setw(10) << std::left << e.getPV();
+  }
+  std::cout << std::endl;
+  for(Entite e : casesTerrain){
+    std::cout << std::setw(10) << std::left;
+    e.afficher();
+  }
+  std::cout << std::endl;
+}
+
+int main(){
+  std::cout << "gg" << std::endl;
 }
