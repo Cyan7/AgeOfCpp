@@ -11,6 +11,7 @@
 
 
 class Terrain{
+	static Terrain *monTerrain;
 	std::vector<Entite> mesEntites;
 	std::vector<Joueur> mesJoueurs;
 
@@ -44,6 +45,7 @@ class Terrain{
 
 
 	public :
+		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
 		void afficher();
 		int ajouterUnite(Unite& u);
 
