@@ -8,7 +8,7 @@ int Unite::getPrix() const{
 int Unite::getPtAttaque() const{
   return ptAttaque;
 }
-int* Unite::getPortee() const{
+std::vector<int> Unite::getPortee() const{
   return portee;
 }
 
@@ -18,7 +18,7 @@ void Unite::setPrix(int p){
 void Unite::setPtAttaque(int attaque){
   ptAttaque=attaque;
 }
-void Unite::setPortee(int* v){
+void Unite::setPortee(std::vector<int> v){
   portee=v;
 }
 

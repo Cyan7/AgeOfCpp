@@ -15,10 +15,10 @@ void Fantassin::promouvoir(){
   else{
     this->superSoldat = true;
   }
+}
 
-  void Fantassin::afficher(){
-    char a = joueur ==jA ? 'A' : 'B';
-    std::cout << "Fan" << a << std::endl;
-    //TODO : afficher les pv
-  }
+void Fantassin::afficher(){
+  char a = joueur ==jA ? 'A' : 'B';
+  std::cout << "Fan" << a << std::endl;
+  //TODO : afficher les pv
 }
