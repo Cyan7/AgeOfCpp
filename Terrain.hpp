@@ -49,9 +49,7 @@ class Terrain{
 		void afficher();
 		bool creerUnite(Base b, unitEnum type);
 		void update();
-		bool peutAttaquer(Unite u) const;
-		Entite cible(Unite u) const;
+		Entite* cible(Unite u) const;
 		void afficherTerrain();
-
 
 };

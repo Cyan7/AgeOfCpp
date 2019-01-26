@@ -34,8 +34,30 @@ bool Terrain::creerUnite(Base b, unitEnum type){
   return false;
 }
 
-bool Terrain::peutAttaquer(Unite u) const{
-
+Entite* Terrain::cible(Unite u) const{
+  Entite* cible = nullptr;
+  int distmin = 12;
+  switch (u.getJoueur()) {
+    case jA:
+      for (Entite e:mesEntitesA){
+        int dist = std::abs(e.getPosition()-u.getPosition());
+        if (dist >= u.getPortee().at(0) && dist <= u.getPortee().back() && dist<distmin){
+          distmin = dist;
+          cible = &e;
+        }
+      }
+    break;
+    case jB:
+      for (Entite e:mesEntitesB){
+        int dist = std::abs(e.getPosition()-u.getPosition());
+        if (dist >= u.getPortee().at(0) && dist <= u.getPortee().back() && dist<distmin){
+          distmin = dist;
+          cible = &e;
+        }
+      }
+    break;
+  }
+  return cible;
 }
 
 void Terrain::afficherTerrain(){

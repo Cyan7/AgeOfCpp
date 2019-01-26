@@ -8,10 +8,11 @@ class Fantassin : public Unite{
   bool superSoldat;
 public:
   Fantassin(joueurEnum j) :
-    Unite(10, j==jA?0:11,j,10,4,nullptr){
-      int initPorteeFantassin[1]={1};
-      this->setPortee(initPorteeFantassin);
-      superSoldat=false;}
+    Unite(10, j==jA?0:11,j,10,4){
+      std::vector<int> v{1};
+      this->portee = v;
+      superSoldat=false;
+    }
   ~Fantassin(){}
 
   bool isSuperSoldat();
