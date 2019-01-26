@@ -60,6 +60,24 @@ Entite* Terrain::cible(Unite u) const{
   return cible;
 }
 
+void Terrain::update(){
+  if(mesEntitesA.at(0).getPV() <= 0) this->Aloose = true;
+  for(int i=mesEntitesA.size()-1; i>=0; i--){
+    Unite& u = dynamic_cast<Unite&>(mesEntitesA.at(i));
+    if(u.getPV() <= 0){
+      mesJoueurs.at(0).setOr(mesJoueurs.at(0).getOr() - 0.5*u.getPrix());
+      mesEntitesA.erase(mesEntitesA.begin()+i);
+    }
+  }
+  for(int i=mesEntitesB.size()-1; i>=0; i--){
+    Unite& u = dynamic_cast<Unite&>(mesEntitesB.at(i));
+    if(u.getPV() <= 0){
+      mesJoueurs.at(1).setOr(mesJoueurs.at(1).getOr() - 0.5*u.getPrix());
+      mesEntitesB.erase(mesEntitesA.begin()+i);
+    }
+  }
+}
+
 void Terrain::afficherTerrain(){
   //on range les entités dans leur ordre de position
   std::vector<Entite> casesTerrain;

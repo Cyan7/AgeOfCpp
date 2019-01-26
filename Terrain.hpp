@@ -10,12 +10,16 @@
 
 
 class Terrain{
+	bool Aloose;
+	bool Bloose;
 	static Terrain *monTerrain;
 	std::vector<Entite> mesEntitesA;
 	std::vector<Entite> mesEntitesB;
 	std::vector<Joueur> mesJoueurs;
 
 	Terrain(bool deuxJoueurs, bool charger, std::string fichierSauvegarde){
+		Aloose = false;
+		Bloose = false;
 		if (!charger){
 			if (deuxJoueurs){
 				Humain joueurA;
@@ -46,7 +50,6 @@ class Terrain{
 
 	public :
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
-		void afficher();
 		bool creerUnite(Base b, unitEnum type);
 		void update();
 		Entite* cible(Unite u) const;
