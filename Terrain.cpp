@@ -19,23 +19,25 @@ Terrain Terrain::getInstance(bool deuxJoueurs, bool charger, std::string fichier
 bool Terrain::creerUnite(joueurEnum j, unitEnum type){
   switch(j){
     case jA:
-      Base& ba = dynamic_cast<Base&>(mesEntitesA.at(0));
+    {
+      Base& b = dynamic_cast<Base&>(mesEntitesA.at(0));
       if(mesJoueurs.at(0).creerUnite(type)){
-        Entite e = (Entite) *(ba.creerUnite(type));
+        Entite e = (Entite) *(b.creerUnite(type));
         mesEntitesA.push_back(e);
         return true;
       }
       return false;
-      break;
+    }
     case jB:
-      Base& bb = dynamic_cast<Base&>(mesEntitesB.at(0))
+    {
+      Base& b = dynamic_cast<Base&>(mesEntitesB.at(0));
       if(mesJoueurs.at(1).creerUnite(type)){
-        Entite e = (Entite) *(bb.creerUnite(type));
+        Entite e = (Entite) *(b.creerUnite(type));
         mesEntitesB.push_back(e);
         return true;
       }
       return false;
-      break;
+    }
   }
   return false;
 }
