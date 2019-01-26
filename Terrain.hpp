@@ -12,7 +12,8 @@
 
 class Terrain{
 	static Terrain *monTerrain;
-	std::vector<Entite> mesEntites;
+	std::vector<Entite> mesEntitesA;
+	std::vector<Entite> mesEntitesB;
 	std::vector<Joueur> mesJoueurs;
 
 	Terrain(bool deuxJoueurs, bool charger, std::string fichierSauvegarde){
@@ -24,8 +25,8 @@ class Terrain{
 				mesJoueurs.push_back((Joueur) joueurB);
 				Base baseA(jA);
 				Base baseB(jB);
-				mesEntites.push_back((Entite) baseA);
-				mesEntites.push_back((Entite) baseB);
+				mesEntitesA.push_back((Entite) baseA);
+				mesEntitesB.push_back((Entite) baseB);
 			}
 			if (!deuxJoueurs){
 				Humain joueurA;
@@ -34,8 +35,8 @@ class Terrain{
 				mesJoueurs.push_back((Joueur) joueurB);
 				Base baseA(jA);
 				Base baseB(jB);
-				mesEntites.push_back((Entite) baseA);
-				mesEntites.push_back((Entite) baseB);
+				mesEntitesA.push_back((Entite) baseA);
+				mesEntitesB.push_back((Entite) baseB);
 			}
 		}
 
@@ -47,7 +48,11 @@ class Terrain{
 	public :
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
 		void afficher();
-		int ajouterUnite(Unite& u);
+		bool creerUnite(Base b, unitEnum type);
+		void update();
+		bool peutAttaquer(Unite u) const;
+		Entite cible(Unite u) const;
+
 
 };
 

@@ -2,6 +2,10 @@
 #define JOUEUR_H
 #include "Unite.hpp"
 
+#define PRIX_FANTASSIN (10)
+#define PRIX_ARCHER (12)
+#define PRIX_CATAPULTE (20)
+
 class Joueur{
   int gold;
 public:
@@ -11,8 +15,7 @@ public:
 
   int getOr();
   void setOr(int argent);
-
-  Unite* creerUnite(char u);
+  bool creerUnite(unitEnum type);
 };
 
 #endif
