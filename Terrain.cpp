@@ -87,48 +87,50 @@ void Terrain::update(){
 }
 
 void Terrain::afficherTerrain(){
-  std::cout << mesJoueurs.at(0)->getOr() << std::setw(5) << std::right << mesJoueurs.at(1)->getOr() << std::endl;
+
+  std::cout << std::endl;
+
+  //affichage or des joueurs
+  std::cout << std::setw(7) << std::left << "Or jA : " << mesJoueurs.at(0)->getOr();
+  for(int i= 0; i<9;i++){
+    std::cout << std::setw(7) << std::left << "";
+  }
+  std::cout << std::setw(7) << std::left << "Or jB : " << mesJoueurs.at(1)->getOr() << std::endl;
+  std::cout << std::endl;
+
   //on range les entités dans leur ordre de position
   std::vector<Entite*> casesTerrain(12);
   for(Entite* eA : mesEntitesA){
-    if(eA->getPosition()==0){
-      if(!(dynamic_cast<Base*>(eA))){
-        casesTerrain.at(eA->getPosition())=eA;
-      }
-    }
-    else{
       casesTerrain.at(eA->getPosition())=eA;
-    }
   }
   for(Entite* eB : mesEntitesB){
-    if(eB->getPosition()==0){
-      if(!(dynamic_cast<Base*>(eB))){
-        casesTerrain.at(eB->getPosition())=eB;
+    casesTerrain.at(eB->getPosition())=eB;
+  }
+
+  //affichage des PV de l'entité
+  for(Entite* e : casesTerrain){
+    if(e){
+      if(dynamic_cast<Base*>(e) && e->getPosition()==0){
+        std::cout << std::setw(7) << std::left << "/ A  \\";
+      }
+      else if(dynamic_cast<Base*>(e) && e->getPosition()==11){
+        std::cout << std::setw(7) << std::left << "/ B  \\";
+      }
+      else{
+        std::cout << std::setw(7) << std::left << e->getPV();
       }
     }
     else{
-      casesTerrain.at(eB->getPosition())=eB;
+      std::cout << std::setw(7) << std::left << "    ";
     }
   }
 
-  //on parcourt casesTerrain pour afficher les PV puis l'entité
+  std::cout << std::endl;
+
+  //affichage des personnages
   for(Entite* e : casesTerrain){
     if(e){
-      if(dynamic_cast<Base*>(eB)){
-        //std::cout << "/  \";
-      }
-      std::cout << std::setw(5) << std::left << e->getPV();
-    }
-    else{
-      std::cout << std::setw(5) << std::left << "    ";
-    }
-  }
-
-  std::cout << "" << std::endl;
-
-  for(Entite* e : casesTerrain){
-    if(e){
-      std::cout << std::setw(5) << std::left;
+      std::cout << std::setw(7) << std::left;
       if(Base* b = dynamic_cast<Base*>(e)){
         b->afficher();
       }
@@ -143,10 +145,32 @@ void Terrain::afficherTerrain(){
       }
     }
     else{
-      std::cout << std::setw(5) << std::left << "____";
+      std::cout << std::setw(7) << std::left << "____";
     }
   }
-  std::cout << "" << std::endl;
+  std::cout << std::endl;
+
+  //affichage des pv des bases
+  for(Entite* e : casesTerrain){
+    if(e){
+      if(e->getPosition()==0){
+        std::cout << std::setw(7) << std::left << mesEntitesA.at(0)->getPV();
+      }
+      else if(e->getPosition()==11){
+        std::cout << std::setw(7) << std::left << mesEntitesB.at(0)->getPV();
+      }
+      else{
+        std::cout << std::setw(7) << std::left << "    ";
+      }
+    }
+    else{
+      std::cout << std::setw(7) << std::left << "    ";
+    }
+  }
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
 }
 
 int main(){
