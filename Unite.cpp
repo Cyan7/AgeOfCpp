@@ -25,7 +25,7 @@ void Unite::setPortee(std::vector<int> v){
 void Unite::phase1(struct _Cible* c){
   if(c->cible1){
     attaquer(c->cible1);
-    if(c->cible2) attaquer(c->cible2);
+    if(c->nb == 2) attaquer(c->cible2);
     action1 = true;
   }
 }

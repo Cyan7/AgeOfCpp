@@ -87,6 +87,7 @@ struct _Cible* Terrain::cible(Unite* u) const{
             if(std::abs(e->getPosition()-u->getPosition())==distmin+1){
               cible->cible2 = e;
               cible->nb = 2;
+              std::cout << "#OUIT" << std::endl;
             }
             else cible->nb = 1;
           }
@@ -123,7 +124,7 @@ void Terrain::update(){
     if(u->getPV() <= 0){
       mesJoueurs.at(1)->setOr(mesJoueurs.at(1)->getOr() - 0.5*u->getPrix());
       delete mesEntitesB.at(i);
-      mesEntitesB.erase(mesEntitesA.begin()+i);
+      mesEntitesB.erase(mesEntitesB.begin()+i);
     }
   }
 }
@@ -137,13 +138,13 @@ void Terrain::afficherTerrain(){
   for(int i= 0; i<9;i++){
     std::cout << std::setw(7) << std::left << "";
   }
+
   std::cout << std::setw(7) << std::left << "Or jB : " << mesJoueurs.at(1)->getOr() << std::endl;
   std::cout << std::endl;
-
-  //on range les entités dans leur ordre de position
+    //on range les entités dans leur ordre de position
   std::vector<Entite*> casesTerrain(12);
   for(Entite* eA : mesEntitesA){
-      casesTerrain.at(eA->getPosition())=eA;
+    casesTerrain.at(eA->getPosition())=eA;
   }
   for(Entite* eB : mesEntitesB){
     casesTerrain.at(eB->getPosition())=eB;
@@ -221,87 +222,187 @@ void Terrain::payDay(){
 }
 
 void Terrain::effectuerTour(joueurEnum j){
+
   switch (j) {
     case jA:
     {
+      afficherTerrain();
       // Phase 1
+
       for(int i=mesEntitesA.size()-1; i>=1; i--){
         Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
         struct _Cible* c = cible(u);
         u->phase1(c);
         update();
-        afficherTerrain();
+        if(Bloose) break;
       }
+      afficherTerrain();
+      if(Bloose) break;
       // Phase 2
-      for(int i=1;i<mesEntitesA.size(); i++){
-        Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
-        u->phase2();
-        afficherTerrain();
+      for(unsigned int i=1;i<mesEntitesA.size(); i++){
+        if(Fantassin* u = dynamic_cast<Fantassin*>(mesEntitesA.at(i))){
+          if(u->getPosition()+1 != mesEntitesB.back()->getPosition() && u->getPosition()+1 != mesEntitesA.at(i-1)->getPosition()) u->phase2();
+        };
+        if(Archer* u = dynamic_cast<Archer*>(mesEntitesA.at(i))){
+          if(u->getPosition()+1 != mesEntitesB.back()->getPosition() && u->getPosition()+1 != mesEntitesA.at(i-1)->getPosition()) u->phase2();
+        };
+        if(Catapulte* u = dynamic_cast<Catapulte*>(mesEntitesA.at(i))){
+          if(u->getPosition()+1 != mesEntitesB.back()->getPosition() && u->getPosition()+1 != mesEntitesA.at(i-1)->getPosition()) u->phase2();
+        };
+        if(Bloose) break;
       }
+      afficherTerrain();
+      if(Bloose) break;
       // Phase 3
-      for(int i=1;i<mesEntitesA.size(); i++){
-        Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
-        struct _Cible* c = cible(u);
-        u->phase3(c);
+      for(unsigned int i=1;i<mesEntitesA.size(); i++){
+        Unite* un = dynamic_cast<Unite*>(mesEntitesA.at(i));
+        struct _Cible* c = cible(un);
+        if(Fantassin* u = dynamic_cast<Fantassin*>(un)){
+          u->phase3(c);
+        };
+        if(Archer* u = dynamic_cast<Archer*>(un)){
+          u->phase3(c);
+        };
+        if(Catapulte* u = dynamic_cast<Catapulte*>(un)){
+          u->phase3(c);
+        };
         update();
-        afficherTerrain();
+        if(Bloose) break;
+      }
+      afficherTerrain();
+      if(Bloose) break;
+
+      // Création ?
+      if(mesEntitesA.back()->getPosition() != 0 || mesEntitesA.back()->estBase || mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN){
+        std::string f = "";
+        std::string a = "";
+        std::string c = "";
+        if(mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
+        if(mesJoueurs.at(0)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
+        if(mesJoueurs.at(0)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
+        std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
+        char unit;
+        std::cin >> unit;
+        switch (unit) {
+          case 'f':
+          {
+          creerUnite(jA, fantassin);
+          break;
+          }
+          case 'a':
+          {
+          bool b = creerUnite(jA, archer);
+          if(!b) std::cout << "Vous n'avez000 pas assez d'argent !" << std::endl;
+          break;
+          }
+          case 'c':
+          {
+          bool b = creerUnite(jA, catapulte);
+          if(!b) std::cout << "Vous n'avez pas assez d'argent !" << std::endl;
+          break;
+          }
+          case 'r':
+          break;
+        }
+        break;
       }
 
     }
     case jB:
     {
+      afficherTerrain();
       // Phase 1
-      for(int i=mesEntitesB.size()-1; i>=1; i--){
+      for(unsigned int i=mesEntitesB.size()-1; i>=1; i--){
         Unite* u = dynamic_cast<Unite*>(mesEntitesB.at(i));
         struct _Cible* c = cible(u);
         u->phase1(c);
         update();
-        afficherTerrain();
+        if(Aloose) break;
       }
+      afficherTerrain();
+      if(Aloose) break;
       // Phase 2
-      for(int i=1;i<mesEntitesB.size(); i++){
+      for(unsigned int i=1;i<mesEntitesB.size(); i++){
         if(Fantassin* u = dynamic_cast<Fantassin*>(mesEntitesB.at(i))){
-          u->phase2();
+          if(u->getPosition()-1 != mesEntitesA.back()->getPosition() && u->getPosition()-1 != mesEntitesB.at(i-1)->getPosition()) u->phase2();
         };
         if(Archer* u = dynamic_cast<Archer*>(mesEntitesB.at(i))){
-          u->phase2();
+          if(u->getPosition()-1 != mesEntitesA.back()->getPosition() && u->getPosition()-1 != mesEntitesB.at(i-1)->getPosition()) u->phase2();
         };
         if(Catapulte* u = dynamic_cast<Catapulte*>(mesEntitesB.at(i))){
-          u->phase2();
+          if(u->getPosition()-1 != mesEntitesA.back()->getPosition() && u->getPosition()-1 != mesEntitesB.at(i-1)->getPosition()) u->phase2();
         };
-        afficherTerrain();
+        if(Aloose) break;
       }
+      afficherTerrain();
+      if(Aloose) break;
       // Phase 3
-      for(int i=1;i<mesEntitesB.size(); i++){
-        Unite* u = dynamic_cast<Unite*>(mesEntitesB.at(i));
-        struct _Cible* c = cible(u);
-        u->phase3(c);
+      for(unsigned int i=1;i<mesEntitesB.size(); i++){
+        Unite* un = dynamic_cast<Unite*>(mesEntitesB.at(i));
+        struct _Cible* c = cible(un);
+        if(Fantassin* u = dynamic_cast<Fantassin*>(un)){
+          u->phase3(c);
+        };
+        if(Archer* u = dynamic_cast<Archer*>(un)){
+          u->phase3(c);
+        };
+        if(Catapulte* u = dynamic_cast<Catapulte*>(un)){
+          u->phase3(c);
+        };
         update();
-        afficherTerrain();
+        if(Aloose) break;
       }
+      afficherTerrain();
+      // Création ?
+      if(mesEntitesB.back()->getPosition() != 0 || mesEntitesB.back()->estBase || mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN){
+        std::string f = "";
+        std::string a = "";
+        std::string c = "";
+        if(mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
+        if(mesJoueurs.at(1)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
+        if(mesJoueurs.at(1)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
+        std::cout << "Joueur B : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
+        char unit;
+        std::cin >> unit;
+        switch (unit) {
+          case 'f':
+          {
+          creerUnite(jB, fantassin);
+          break;
+          }
+          case 'a':
+          {
+          bool b = creerUnite(jB, archer);
+          if(!b) std::cout << "Vous n'avez000 pas assez d'argent !" << std::endl;
+          break;
+          }
+          case 'c':
+          {
+          bool b = creerUnite(jB, catapulte);
+          if(!b) std::cout << "Vous n'avez pas assez d'argent !" << std::endl;
+          break;
+          }
+          case 'r':
+          break;
+        }
+      }
+      else std::cout << "Aucune action à effectuer" << std::endl;
     }
   }
 }
 
 int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
-  terrain.mesJoueurs.at(0)->setOr(100);
-  joueurEnum jouA = jA;
-  joueurEnum jouB = jB;
-  unitEnum fA = catapulte;
-  terrain.creerUnite(jouA,fA);
-  terrain.afficherTerrain();
-  terrain.update();
-  terrain.afficherTerrain();
-
-  terrain.effectuerTour(jouA);
   //Lancement du jeu
   int compt = 0;
   while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
-    terrain.effectuerTour(jouA);
-    terrain.effectuerTour(jouB);
+    terrain.payDay();
+    terrain.effectuerTour(jA);
+    terrain.effectuerTour(jB);
     compt+=1;
   }
-
+  if(terrain.getAloose()) std::cout << "A wasted" << std::endl;
+  if(terrain.getBloose()) std::cout << "B wasted" << std::endl;
+  if(!terrain.getAloose() && !terrain.getBloose()) std::cout << "Let's call it a draw" << std::endl;
   return 0;
 }
