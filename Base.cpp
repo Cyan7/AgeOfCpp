@@ -7,9 +7,7 @@
 #include "Catapulte.hpp"
 
 void Base::afficher(){
-  char a = joueur ==jA ? 'A' : 'B';
-  std::cout << "Base" << a << std::endl;
-  //TODO : afficher les pv
+  std::cout << "|    |";
 }
 
 Unite* Base::creerUnite(unitEnum u){
@@ -19,10 +17,10 @@ Unite* Base::creerUnite(unitEnum u){
       unit = new Fantassin(this->joueur);
       break;
     case archer :
-      unit = new Fantassin(this->joueur);
+      unit = new Archer(this->joueur);
       break;
     default :
-      unit = new Fantassin(this->joueur);
+      unit = new Catapulte(this->joueur);
       break;
   }
   return unit;

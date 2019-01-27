@@ -95,14 +95,14 @@ void Terrain::afficherTerrain(){
   for(Entite* eB : mesEntitesB){
     casesTerrain.insert(casesTerrain.begin()+eB->getPosition(),eB);
   }
-  //on parcourt casesTerrain pour afficher les PV puis l'entité
 
+  //on parcourt casesTerrain pour afficher les PV puis l'entité
   for(Entite* e : casesTerrain){
     if(e){
-      std::cout << std::setw(5) << std::left << e->getPV();
+      std::cout << std::setw(10) << std::left << e->getPV();
     }
     else{
-      std::cout << std::setw(5) << std::left << "    ";
+      std::cout << std::setw(10) << std::left << "    ";
     }
   }
 
@@ -114,13 +114,13 @@ void Terrain::afficherTerrain(){
       if(Base* b = dynamic_cast<Base*>(e)){
         b->afficher();
       }
-      else if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
+      if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
         f->afficher();
       }
-      else if(Archer *a = dynamic_cast<Archer*>(e)){
+      if(Archer *a = dynamic_cast<Archer*>(e)){
         a->afficher();
       }
-      else if(Catapulte *c = dynamic_cast<Catapulte*>(e)){
+      if(Catapulte *c = dynamic_cast<Catapulte*>(e)){
         c->afficher();
       }
     }
@@ -133,10 +133,13 @@ void Terrain::afficherTerrain(){
 
 int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
+  terrain.mesJoueurs.at(0)->setOr(100);
   joueurEnum jouA = jA;
-  unitEnum fA = fantassin;
+  unitEnum fA = archer;
   terrain.creerUnite(jouA,fA);
-  terrain.mesEntitesA.at(1)->setPV(-2);
-  terrain.update();
   terrain.afficherTerrain();
+  /*terrain.mesEntitesA.at(1)->setPV(-2);
+  terrain.update();
+  terrain.afficherTerrain();*/
+  return 0;
 }

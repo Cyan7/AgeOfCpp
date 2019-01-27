@@ -25,4 +25,5 @@ bool Joueur::creerUnite(unitEnum type){
       if (result) this->gold = gold - PRIX_CATAPULTE;
       return result;
   }
+  return false;
 }

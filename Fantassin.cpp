@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include "Fantassin.hpp"
 #include "Entite.hpp"
 
@@ -18,7 +19,7 @@ void Fantassin::promouvoir(){
 }
 
 void Fantassin::afficher(){
-  char a = joueur ==jA ? 'A' : 'B';
-  std::cout << "Fan" << a << std::endl;
-  //TODO : afficher les pv
+  std::string team = joueur == jA ? "A" : "B";
+  std::string perso = "Fan" + team;
+  std::cout << perso;
 }
