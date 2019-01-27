@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 #include <vector>
 #include <string>
@@ -391,8 +392,63 @@ void Terrain::effectuerTour(joueurEnum j){
   }
 }
 
-int main(){
+void Terrain::sauvegarder(std::string nomFichier){
+  /*à récupérer :
+  - l'or de chaque joueur
+  - les entités de chaque joueur avec
+    -les pv
+    -leur position
+    - fantassin : supersoldat ou non
+  */
+  /*
+  {gold;
+  unite[pv,position,bool];
+  }
+  */
+  std::ofstream sauv;
+  sauv.open(nomFichier);
+  //sauvegarde des paramètres du joueur A
+  sauv << "{" << mesJoueurs.at(0)->getOr() <<";" << std::endl;
+  for(Entite* e : mesEntitesA){
+    if(dynamic_cast<Base*>(e)){
+      sauv << "base[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+    }
+    else if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
+      sauv << "fantassin[" << f->getPV() << "," << f->getPosition() << "," << f->isSuperSoldat() << "];" <<std::endl;
+    }
+    else if(dynamic_cast<Archer*>(e)){
+      sauv << "archer[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+    }
+    else{
+      sauv << "catapulte[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+    }
+  }
+  sauv << "}" << std::endl;
+
+  //sauvegarde des paramètres du joueur B
+  sauv << "{" << mesJoueurs.at(1)->getOr() <<";" << std::endl;
+  for(Entite* e : mesEntitesB){
+    if(dynamic_cast<Base*>(e)){
+      sauv << "base[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+    }
+    else if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
+      sauv << "fantassin[" << f->getPV() << "," << f->getPosition() << "," << f->isSuperSoldat() << "];" <<std::endl;
+    }
+    else if(dynamic_cast<Archer*>(e)){
+      sauv << "archer[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+    }
+    else{
+      sauv << "catapulte[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+    }
+  }
+  sauv << "}" << std::endl;
+  sauv.close();
+}
+
+/* MAIN */
+int main(int argc, char * argv[]){
   Terrain terrain = Terrain::getInstance(true, false, "");
+<<<<<<< HEAD
   //Lancement du jeu
   int compt = 0;
   while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
@@ -404,5 +460,26 @@ int main(){
   if(terrain.getAloose()) std::cout << "A wasted" << std::endl;
   if(terrain.getBloose()) std::cout << "B wasted" << std::endl;
   if(!terrain.getAloose() && !terrain.getBloose()) std::cout << "Let's call it a draw" << std::endl;
+=======
+  terrain.mesJoueurs.at(0)->setOr(100);
+  joueurEnum jouA = jA;
+  joueurEnum jouB = jB;
+  unitEnum fA = fantassin;
+  terrain.creerUnite(jouA,fA);
+  terrain.afficherTerrain();
+  terrain.update();
+  terrain.afficherTerrain();
+
+  terrain.sauvegarder("sauvegarde.txt");
+
+  //Lancement du jeu
+  int compt = 0;
+  /*while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
+    terrain.effectuerTour(jouA);
+    terrain.effectuerTour(jouB);
+    compt+=1;
+  }*/
+
+>>>>>>> e1bd82b627e71d3cc648cd6385bcd7a012562480
   return 0;
 }
