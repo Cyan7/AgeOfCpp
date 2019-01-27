@@ -115,7 +115,7 @@ void Terrain::update(){
   for(int i=mesEntitesA.size()-1; i>=1; i--){
     Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
     if(u->getPV() <= 0){
-      mesJoueurs.at(0)->setOr(mesJoueurs.at(0)->getOr() - 0.5*u->getPrix());
+      mesJoueurs.at(1)->setOr(mesJoueurs.at(1)->getOr() + 0.5*u->getPrix());
       delete mesEntitesA.at(i);
       mesEntitesA.erase(mesEntitesA.begin()+i);
     }
@@ -123,7 +123,7 @@ void Terrain::update(){
   for(int i=mesEntitesB.size()-1; i>=1; i--){
     Unite* u = dynamic_cast<Unite*>(mesEntitesB.at(i));
     if(u->getPV() <= 0){
-      mesJoueurs.at(1)->setOr(mesJoueurs.at(1)->getOr() - 0.5*u->getPrix());
+      mesJoueurs.at(0)->setOr(mesJoueurs.at(0)->getOr() + 0.5*u->getPrix());
       delete mesEntitesB.at(i);
       mesEntitesB.erase(mesEntitesB.begin()+i);
     }
