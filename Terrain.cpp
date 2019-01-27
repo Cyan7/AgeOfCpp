@@ -293,54 +293,126 @@ void Terrain::sauvegarder(std::string nomFichier){
     - fantassin : supersoldat ou non
   */
   /*
-  {gold;
+  gold;
   unite[pv,position,bool];
-  }
+  .
   */
   std::ofstream sauv;
   sauv.open(nomFichier);
   //sauvegarde des paramètres du joueur A
-  sauv << "{" << mesJoueurs.at(0)->getOr() <<";" << std::endl;
+  sauv << mesJoueurs.at(0)->getOr() <<";" << std::endl;
   for(Entite* e : mesEntitesA){
     if(dynamic_cast<Base*>(e)){
-      sauv << "base[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+      sauv << "0[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
     }
     else if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
-      sauv << "fantassin[" << f->getPV() << "," << f->getPosition() << "," << f->isSuperSoldat() << "];" <<std::endl;
+      sauv << "1[" << f->getPV() << "," << f->getPosition() << "," << f->isSuperSoldat() << "];" <<std::endl;
     }
     else if(dynamic_cast<Archer*>(e)){
-      sauv << "archer[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+      sauv << "2[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
     }
     else{
-      sauv << "catapulte[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+      sauv << "3[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
     }
   }
-  sauv << "}" << std::endl;
+  sauv << "." << std::endl;
 
   //sauvegarde des paramètres du joueur B
-  sauv << "{" << mesJoueurs.at(1)->getOr() <<";" << std::endl;
+  sauv << mesJoueurs.at(1)->getOr() <<";" << std::endl;
   for(Entite* e : mesEntitesB){
     if(dynamic_cast<Base*>(e)){
-      sauv << "base[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+      sauv << "0[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
     }
     else if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
-      sauv << "fantassin[" << f->getPV() << "," << f->getPosition() << "," << f->isSuperSoldat() << "];" <<std::endl;
+      sauv << "1[" << f->getPV() << "," << f->getPosition() << "," << f->isSuperSoldat() << "];" <<std::endl;
     }
     else if(dynamic_cast<Archer*>(e)){
-      sauv << "archer[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+      sauv << "2[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
     }
     else{
-      sauv << "catapulte[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
+      sauv << "3[" << e->getPV() << "," << e->getPosition() << "," << "0" << "];" <<std::endl;
     }
   }
-  sauv << "}" << std::endl;
   sauv.close();
 }
 
+
+
+void Terrain::lireSauvegarde(std::string nomFichier){
+  std::string line;
+  std::ifstream sauv(nomFichier);
+  int joueur = 0;
+  //récupération des paramètres des joueurs A et B
+  while (getline(sauv,line,'.') && joueur<2){
+      std::cout << "string parsée : {" << line << "}" << std::endl;
+
+      //parsing du gold du joueur
+      size_t pos = 0;
+      std::string s_orJoueur;
+      pos = line.find(";");
+      s_orJoueur = line.substr(0, pos);
+      int orJoueur = std::stoi(s_orJoueur);
+      std::cout << "gold joueur : " << orJoueur << std::endl;
+      mesJoueurs.at(joueur)->setOr(orJoueur);
+      line.erase(0, pos + 2);
+      std::cout << "string restante après parsing gold : {" << line << "}" << std::endl;
+
+      //parsing des entités du joueur
+      std::string s_entiteJoueur;
+      while ((pos = line.find(";")) != std::string::npos) {
+        s_entiteJoueur = line.substr(0, pos);
+        std::cout << "entite : " << s_entiteJoueur << std::endl;
+        //parsing de l'entité et de ses paramètres
+        size_t pos2 = s_entiteJoueur.find("[");
+        std::string s_entite = s_entiteJoueur.substr(0,pos2);
+        switch (std::stoi(s_entite)) {
+          case 0:
+            {Base* b = new Base(joueur ? jB : jA);
+            if(joueur) {mesEntitesB.push_back(b);}
+            else{mesEntitesA.push_back(b);}
+            break;}
+          case 1:
+            {Fantassin* f = new Fantassin(joueur ? jB : jA);
+            if(joueur) {mesEntitesB.push_back(f);}
+            else{mesEntitesA.push_back(f);}
+            break;}
+          case 2:
+            {Archer* a = new Archer(joueur ? jB : jA);
+            if(joueur) {mesEntitesB.push_back(a);}
+            else{mesEntitesA.push_back(a);}
+            break;}
+          case 3:
+            {Catapulte* c = new Catapulte(joueur ? jB : jA);
+            if(joueur) {mesEntitesB.push_back(c);}
+            else{mesEntitesA.push_back(c);}
+            break;}
+        }
+
+
+
+        line.erase(0, pos + 2);
+      }
+      std::cout << "string restante après parsing entités : {" << line << "}" << std::endl;
+
+
+      joueur+=1;
+  }
+  sauv.close();
+}
+
+
+
+
 /* MAIN */
 int main(int argc, char * argv[]){
-  Terrain terrain = Terrain::getInstance(true, false, "");
-  terrain.mesJoueurs.at(0)->setOr(100);
+  Terrain terrain = Terrain::getInstance(true, true, "sauvegarde.txt");
+  for (Entite* e : terrain.mesEntitesA){
+    std::cout << "eA";
+  }
+  for (Entite* e : terrain.mesEntitesB){
+    std::cout << "eB";
+  }
+  /*terrain.mesJoueurs.at(0)->setOr(100);
   joueurEnum jouA = jA;
   joueurEnum jouB = jB;
   unitEnum fA = fantassin;
@@ -350,6 +422,7 @@ int main(int argc, char * argv[]){
   terrain.afficherTerrain();
 
   terrain.sauvegarder("sauvegarde.txt");
+  terrain.lireSauvegarde("sauvegarde.txt");*/
 
   //Lancement du jeu
   int compt = 0;
