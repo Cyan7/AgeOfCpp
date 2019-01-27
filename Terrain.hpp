@@ -68,4 +68,6 @@ private:
 		void payDay();
 		void effectuerTour(joueurEnum j);
 
+ 		void sauvegarder(std::string nomFichier);
+
 };
