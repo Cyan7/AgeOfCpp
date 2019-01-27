@@ -153,10 +153,6 @@ void Terrain::afficherTerrain(){
   //affichage des PV de l'entité
   for(Entite* e : casesTerrain){
     if(e){
-<<<<<<< HEAD
-      if(dynamic_cast<Base*>(e)){
-        //std::cout << "/  \";
-=======
       if(dynamic_cast<Base*>(e) && e->getPosition()==0){
         std::cout << std::setw(7) << std::left << "/ A  \\";
       }
@@ -165,7 +161,6 @@ void Terrain::afficherTerrain(){
       }
       else{
         std::cout << std::setw(7) << std::left << e->getPV();
->>>>>>> 1db1c87ee59928cecb08777beeacea844fb20fca
       }
     }
     else{
