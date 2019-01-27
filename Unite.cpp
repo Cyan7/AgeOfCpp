@@ -22,8 +22,16 @@ void Unite::setPortee(std::vector<int> v){
   portee=v;
 }
 
-void Unite::attaquer(Entite& e){
-  e.setPV(e.getPV()-this->getPtAttaque());
+void Unite::phase1(struct _Cible* c){
+  if(c->cible1){
+    attaquer(c->cible1);
+    if(c->cible2) attaquer(c->cible2);
+    action1 = true;
+  }
+}
+
+void Unite::attaquer(Entite* e){
+  e->setPV(e->getPV()-this->getPtAttaque());
 }
 
 void Unite::avancer(){

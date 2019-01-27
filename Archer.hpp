@@ -12,4 +12,7 @@ public:
   ~Archer(){}
 
   void afficher();
+
+  void phase2();
+  void phase3(struct _Cible* c);
 };

@@ -13,3 +13,11 @@ void Catapulte::afficher(){
     std::cout << perso;
   }
 }
+
+void Catapulte::phase2(){
+  // RIENG
+}
+
+void Catapulte::phase3(struct _Cible* c){
+  avancer();
+}

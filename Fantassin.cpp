@@ -18,6 +18,21 @@ void Fantassin::promouvoir(){
   }
 }
 
+void Fantassin::phase2(){
+  avancer();
+}
+
+void Fantassin::phase3(struct _Cible* c){
+  if(!action1){
+    if(c->cible1) attaquer(c->cible1);
+  }
+  else {
+    if(superSoldat == true){
+      if(c->cible1) attaquer(c->cible1);
+    }
+  }
+}
+
 void Fantassin::afficher(){
   std::string team = joueur == jA ? "A" : "B";
   if (this->position!=0){

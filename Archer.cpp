@@ -14,3 +14,11 @@ void Archer::afficher(){
     std::cout << perso;
   }
 }
+
+void Archer::phase2(){
+  avancer();
+}
+
+void Archer::phase3(struct _Cible* c){
+  // RIENG
+}
