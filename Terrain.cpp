@@ -177,7 +177,7 @@ int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
   terrain.mesJoueurs.at(0)->setOr(100);
   joueurEnum jouA = jA;
-  unitEnum fA = archer;
+  unitEnum fA = catapulte;
   terrain.creerUnite(jouA,fA);
   terrain.afficherTerrain();
   terrain.mesEntitesA.at(1)->setPV(-2);
