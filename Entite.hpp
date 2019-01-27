@@ -8,8 +8,11 @@ protected:
   int pv, position;
   joueurEnum joueur;
 
+
 public :
+int estBase;
   //constructeur
+  Entite(){}
   Entite(int ptVie, int posi, joueurEnum j) : pv(ptVie), position(posi), joueur(j){}
   //destructeur
   ~Entite(){}

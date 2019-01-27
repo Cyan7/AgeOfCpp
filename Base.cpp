@@ -16,14 +16,14 @@ Unite* Base::creerUnite(unitEnum u){
   Unite* unit;
   switch(u){
     case fantassin :
-      {Fantassin f(this->joueur);
-      unit = &f;}
+      unit = new Fantassin(this->joueur);
+      break;
     case archer :
-      {Archer a(this->joueur);
-      unit = &a;}
+      unit = new Fantassin(this->joueur);
+      break;
     default :
-      {Catapulte c(this->joueur);
-      unit = &c;}
+      unit = new Fantassin(this->joueur);
+      break;
   }
   return unit;
 }

@@ -5,7 +5,9 @@
 
 class Base: public Entite{
 public:
-  Base(joueurEnum j):Entite(100,j==jA?0:11,j){}
+  Base(joueurEnum j):Entite(100,j==jA?0:11,j){
+    estBase = 17;
+  }
   ~Base(){}
 
   void afficher();
