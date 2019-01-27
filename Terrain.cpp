@@ -109,7 +109,7 @@ struct _Cible* Terrain::cible(Unite* u) const{
 
 void Terrain::update(){
   if(mesEntitesA.at(0)->getPV() <= 0) this->Aloose = true;
-  if(mesEntitesA.at(1)->getPV() <= 0) this->Bloose = true;
+  if(mesEntitesB.at(0)->getPV() <= 0) this->Bloose = true;
   for(int i=mesEntitesA.size()-1; i>=1; i--){
     Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
     if(u->getPV() <= 0){
@@ -282,7 +282,7 @@ void Terrain::effectuerTour(joueurEnum j){
     }
   }
 }
-//////////////MAIN\\\\\\\\\\\\\\
+
 int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
   terrain.mesJoueurs.at(0)->setOr(100);
@@ -291,15 +291,16 @@ int main(){
   unitEnum fA = catapulte;
   terrain.creerUnite(jouA,fA);
   terrain.afficherTerrain();
-  terrain.mesEntitesA.at(1)->setPV(-2);
   terrain.update();
   terrain.afficherTerrain();
 
+  terrain.effectuerTour(jouA);
   //Lancement du jeu
   int compt = 0;
-  while(!Aloose && !Bloose && compt<100){
+  while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
     terrain.effectuerTour(jouA);
     terrain.effectuerTour(jouB);
+    compt+=1;
   }
 
   return 0;

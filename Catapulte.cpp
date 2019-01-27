@@ -19,5 +19,5 @@ void Catapulte::phase2(){
 }
 
 void Catapulte::phase3(struct _Cible* c){
-  avancer();
+  if(!action1) avancer();
 }

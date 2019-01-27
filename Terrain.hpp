@@ -17,6 +17,7 @@ class Terrain{
 	bool Aloose;
 	bool Bloose;
 	static Terrain *monTerrain;
+
 	public :
 	std::vector<Entite*> mesEntitesA;
 	std::vector<Entite*> mesEntitesB;
@@ -58,6 +59,8 @@ private:
 		~Terrain(){}
 
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
+		bool getAloose(){return Aloose;}
+		bool getBloose(){return Bloose;}
 		bool creerUnite(joueurEnum j, unitEnum type);
 		void update();
 		struct _Cible* cible(Unite* u) const;
