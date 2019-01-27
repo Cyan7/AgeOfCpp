@@ -172,7 +172,7 @@ void Terrain::afficherTerrain(){
   std::cout << std::endl;
   std::cout << std::endl;
 }
-
+//////////////MAIN\\\\\\\\\\\\\\
 int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
   terrain.mesJoueurs.at(0)->setOr(100);
@@ -183,5 +183,12 @@ int main(){
   terrain.mesEntitesA.at(1)->setPV(-2);
   terrain.update();
   terrain.afficherTerrain();
+
+  //Lancement du jeu
+  int compt = 0;
+  while(!Aloose && !Bloose && compt<100){
+    terrain.effectuerTour();
+  }
+
   return 0;
 }
