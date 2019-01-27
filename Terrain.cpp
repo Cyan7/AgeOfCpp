@@ -448,7 +448,6 @@ void Terrain::sauvegarder(std::string nomFichier){
 /* MAIN */
 int main(int argc, char * argv[]){
   Terrain terrain = Terrain::getInstance(true, false, "");
-<<<<<<< HEAD
   //Lancement du jeu
   int compt = 0;
   while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
@@ -460,26 +459,5 @@ int main(int argc, char * argv[]){
   if(terrain.getAloose()) std::cout << "A wasted" << std::endl;
   if(terrain.getBloose()) std::cout << "B wasted" << std::endl;
   if(!terrain.getAloose() && !terrain.getBloose()) std::cout << "Let's call it a draw" << std::endl;
-=======
-  terrain.mesJoueurs.at(0)->setOr(100);
-  joueurEnum jouA = jA;
-  joueurEnum jouB = jB;
-  unitEnum fA = fantassin;
-  terrain.creerUnite(jouA,fA);
-  terrain.afficherTerrain();
-  terrain.update();
-  terrain.afficherTerrain();
-
-  terrain.sauvegarder("sauvegarde.txt");
-
-  //Lancement du jeu
-  int compt = 0;
-  /*while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
-    terrain.effectuerTour(jouA);
-    terrain.effectuerTour(jouB);
-    compt+=1;
-  }*/
-
->>>>>>> e1bd82b627e71d3cc648cd6385bcd7a012562480
   return 0;
 }
