@@ -26,7 +26,7 @@ public:
 
   void phase1(struct _Cible* c);
   virtual void phase2(){};
-  virtual void phase3(struct _Cible* c){};
+  virtual void phase3(struct _Cible* c){if(c){};};
 
   void attaquer(Entite* e);
   void avancer(); // change position de l'unité ; print erreur si position hors du terrain
