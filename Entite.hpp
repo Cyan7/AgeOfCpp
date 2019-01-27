@@ -15,7 +15,7 @@ int estBase;
   Entite(){}
   Entite(int ptVie, int posi, joueurEnum j) : pv(ptVie), position(posi), joueur(j){}
   //destructeur
-  ~Entite(){}
+  virtual ~Entite(){}
 
   //getters et setters
   int getPV() const;
