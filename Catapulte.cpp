@@ -4,6 +4,12 @@
 
 void Catapulte::afficher(){
   std::string team = joueur == jA ? "A" : "B";
-  std::string perso = "Cat" + team;
-  std::cout << perso;
+  if (this->position!=0){
+    std::string perso = "Cat" + team;
+    std::cout << perso;
+  }
+  else {
+    std::string perso = "|Cat" + team + "|";
+    std::cout << perso;
+  }
 }

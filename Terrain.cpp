@@ -87,22 +87,40 @@ void Terrain::update(){
 }
 
 void Terrain::afficherTerrain(){
+  std::cout << mesJoueurs.at(0)->getOr() << std::setw(5) << std::right << mesJoueurs.at(1)->getOr() << std::endl;
   //on range les entités dans leur ordre de position
   std::vector<Entite*> casesTerrain(12);
   for(Entite* eA : mesEntitesA){
-    casesTerrain.insert(casesTerrain.begin()+eA->getPosition(),eA);
+    if(eA->getPosition()==0){
+      if(!(dynamic_cast<Base*>(eA))){
+        casesTerrain.at(eA->getPosition())=eA;
+      }
+    }
+    else{
+      casesTerrain.at(eA->getPosition())=eA;
+    }
   }
   for(Entite* eB : mesEntitesB){
-    casesTerrain.insert(casesTerrain.begin()+eB->getPosition(),eB);
+    if(eB->getPosition()==0){
+      if(!(dynamic_cast<Base*>(eB))){
+        casesTerrain.at(eB->getPosition())=eB;
+      }
+    }
+    else{
+      casesTerrain.at(eB->getPosition())=eB;
+    }
   }
 
   //on parcourt casesTerrain pour afficher les PV puis l'entité
   for(Entite* e : casesTerrain){
     if(e){
-      std::cout << std::setw(10) << std::left << e->getPV();
+      if(dynamic_cast<Base*>(eB)){
+        //std::cout << "/  \";
+      }
+      std::cout << std::setw(5) << std::left << e->getPV();
     }
     else{
-      std::cout << std::setw(10) << std::left << "    ";
+      std::cout << std::setw(5) << std::left << "    ";
     }
   }
 
@@ -110,7 +128,7 @@ void Terrain::afficherTerrain(){
 
   for(Entite* e : casesTerrain){
     if(e){
-      std::cout << std::setw(10) << std::left;
+      std::cout << std::setw(5) << std::left;
       if(Base* b = dynamic_cast<Base*>(e)){
         b->afficher();
       }
@@ -125,7 +143,7 @@ void Terrain::afficherTerrain(){
       }
     }
     else{
-      std::cout << std::setw(10) << std::left << "    ";
+      std::cout << std::setw(5) << std::left << "____";
     }
   }
   std::cout << "" << std::endl;
@@ -138,8 +156,8 @@ int main(){
   unitEnum fA = archer;
   terrain.creerUnite(jouA,fA);
   terrain.afficherTerrain();
-  /*terrain.mesEntitesA.at(1)->setPV(-2);
+  terrain.mesEntitesA.at(1)->setPV(-2);
   terrain.update();
-  terrain.afficherTerrain();*/
+  terrain.afficherTerrain();
   return 0;
 }
