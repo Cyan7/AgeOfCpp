@@ -99,6 +99,17 @@ void Terrain::afficherTerrain(){
 
   for(Entite* e : casesTerrain){
     if(e){
+      std::cout << std::setw(5) << std::left << e->getPV();
+    }
+    else{
+      std::cout << std::setw(5) << std::left << "    ";
+    }
+  }
+
+  std::cout << "" << std::endl;
+
+  for(Entite* e : casesTerrain){
+    if(e){
       std::cout << std::setw(10) << std::left;
       if(Base* b = dynamic_cast<Base*>(e)){
         b->afficher();
