@@ -9,6 +9,7 @@ class Unite: public Entite{
 protected:
   int prix,ptAttaque;
   std::vector<int> portee;
+  bool action1;
 
 public:
   Unite(int ptVie, int posi, joueurEnum j, int p, int attaque) :
@@ -23,7 +24,11 @@ public:
   void setPtAttaque(int attaque);
   void setPortee(std::vector<int> v);
 
-  void attaquer(Entite& e);
+  void phase1(struct _Cible* c);
+  virtual void phase2(){};
+  virtual void phase3(struct _Cible* c){};
+
+  void attaquer(Entite* e);
   void avancer(); // change position de l'unité ; print erreur si position hors du terrain
 };
 

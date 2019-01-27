@@ -40,34 +40,77 @@ bool Terrain::creerUnite(joueurEnum j, unitEnum type){
   return false;
 }
 
-Entite* Terrain::cible(Unite* u) const{
-  Entite* cible = nullptr;
+struct _Cible* Terrain::cible(Unite* u) const{
+  struct _Cible* cible = new struct _Cible();
   int distmin = 12;
   switch (u->getJoueur()) {
-    case jA:
+    case jB:
       for (Entite* e:mesEntitesA){
         int dist = std::abs(e->getPosition()-u->getPosition());
         if (dist >= u->getPortee().at(0) && dist <= u->getPortee().back() && dist<distmin){
           distmin = dist;
-          cible = e;
+          cible->cible1 = e;
         }
       }
-    break;
-    case jB:
+      if(dynamic_cast<Catapulte*>(u)){
+        if(distmin < 4){
+          for (Entite* e:mesEntitesA){
+            if(std::abs(e->getPosition()-u->getPosition())==distmin+1){
+              cible->cible2 = e;
+              cible->nb = 2;
+            }
+            else cible->nb = 1;
+          }
+        }
+        if(distmin == 4){
+          for (Entite* e:mesEntitesB){
+            if(std::abs(e->getPosition()-u->getPosition())==distmin-1){
+              cible->cible2 = e;
+              cible->nb = 2;
+            }
+            else cible->nb = 1;
+          }
+        }
+    }
+      else cible->nb = 1;
+      break;
+    case jA:
       for (Entite* e:mesEntitesB){
         int dist = std::abs(e->getPosition()-u->getPosition());
         if (dist >= u->getPortee().at(0) && dist <= u->getPortee().back() && dist<distmin){
           distmin = dist;
-          cible = e;
+          cible->cible1 = e;
+      }
+    }
+      if(dynamic_cast<Catapulte*>(u)){
+        if(distmin < 4){
+          for (Entite* e:mesEntitesB){
+            if(std::abs(e->getPosition()-u->getPosition())==distmin+1){
+              cible->cible2 = e;
+              cible->nb = 2;
+            }
+            else cible->nb = 1;
+          }
+        }
+        if(distmin == 4){
+          for (Entite* e:mesEntitesA){
+            if(std::abs(e->getPosition()-u->getPosition())==distmin-1){
+              cible->cible2 = e;
+              cible->nb = 2;
+            }
+            else cible->nb = 1;
+          }
         }
       }
-    break;
+      else cible->nb = 1;
+      break;
   }
   return cible;
 }
 
 void Terrain::update(){
   if(mesEntitesA.at(0)->getPV() <= 0) this->Aloose = true;
+  if(mesEntitesA.at(1)->getPV() <= 0) this->Bloose = true;
   for(int i=mesEntitesA.size()-1; i>=1; i--){
     Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
     if(u->getPV() <= 0){
@@ -172,11 +215,80 @@ void Terrain::afficherTerrain(){
   std::cout << std::endl;
   std::cout << std::endl;
 }
+
+void Terrain::payDay(){
+  mesJoueurs.at(0)->setOr(mesJoueurs.at(0)->getOr()+SALAIRE);
+  mesJoueurs.at(1)->setOr(mesJoueurs.at(1)->getOr()+SALAIRE);
+}
+
+void Terrain::effectuerTour(joueurEnum j){
+  switch (j) {
+    case jA:
+    {
+      // Phase 1
+      for(int i=mesEntitesA.size()-1; i>=1; i--){
+        Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
+        struct _Cible* c = cible(u);
+        u->phase1(c);
+        update();
+        afficherTerrain();
+      }
+      // Phase 2
+      for(int i=1;i<mesEntitesA.size(); i++){
+        Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
+        u->phase2();
+        afficherTerrain();
+      }
+      // Phase 3
+      for(int i=1;i<mesEntitesA.size(); i++){
+        Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
+        struct _Cible* c = cible(u);
+        u->phase3(c);
+        update();
+        afficherTerrain();
+      }
+
+    }
+    case jB:
+    {
+      // Phase 1
+      for(int i=mesEntitesB.size()-1; i>=1; i--){
+        Unite* u = dynamic_cast<Unite*>(mesEntitesB.at(i));
+        struct _Cible* c = cible(u);
+        u->phase1(c);
+        update();
+        afficherTerrain();
+      }
+      // Phase 2
+      for(int i=1;i<mesEntitesB.size(); i++){
+        if(Fantassin* u = dynamic_cast<Fantassin*>(mesEntitesB.at(i))){
+          u->phase2();
+        };
+        if(Archer* u = dynamic_cast<Archer*>(mesEntitesB.at(i))){
+          u->phase2();
+        };
+        if(Catapulte* u = dynamic_cast<Catapulte*>(mesEntitesB.at(i))){
+          u->phase2();
+        };
+        afficherTerrain();
+      }
+      // Phase 3
+      for(int i=1;i<mesEntitesB.size(); i++){
+        Unite* u = dynamic_cast<Unite*>(mesEntitesB.at(i));
+        struct _Cible* c = cible(u);
+        u->phase3(c);
+        update();
+        afficherTerrain();
+      }
+    }
+  }
+}
 //////////////MAIN\\\\\\\\\\\\\\
 int main(){
   Terrain terrain = Terrain::getInstance(true, false, "");
   terrain.mesJoueurs.at(0)->setOr(100);
   joueurEnum jouA = jA;
+  joueurEnum jouB = jB;
   unitEnum fA = catapulte;
   terrain.creerUnite(jouA,fA);
   terrain.afficherTerrain();
@@ -187,7 +299,8 @@ int main(){
   //Lancement du jeu
   int compt = 0;
   while(!Aloose && !Bloose && compt<100){
-    terrain.effectuerTour();
+    terrain.effectuerTour(jouA);
+    terrain.effectuerTour(jouB);
   }
 
   return 0;

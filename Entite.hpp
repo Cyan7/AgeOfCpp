@@ -27,6 +27,13 @@ int estBase;
   void setJoueur(joueurEnum j);
   //afficher
   virtual void afficher(){};
+
+};
+
+struct _Cible{
+	int nb;
+	Entite* cible1;
+	Entite* cible2;
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include "Catapulte.hpp"
 #include <string>
 
+#define SALAIRE (8)
 
 class Terrain{
 	bool Aloose;
@@ -59,7 +60,9 @@ private:
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
 		bool creerUnite(joueurEnum j, unitEnum type);
 		void update();
-		Entite* cible(Unite* u) const;
+		struct _Cible* cible(Unite* u) const;
 		void afficherTerrain();
+		void payDay();
+		void effectuerTour(joueurEnum j);
 
 };
