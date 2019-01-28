@@ -21,18 +21,22 @@ bool Terrain::creerUnite(joueurEnum j, unitEnum type){
     case jA:
     {
       Base* b = dynamic_cast<Base*>(mesEntitesA.at(0));
-      if(mesJoueurs.at(0)->creerUnite(type)){
-        mesEntitesA.push_back(b->creerUnite(type));
-        return true;
+      if (mesEntitesA.back()->getPosition()!=0 || mesEntitesA.size()==1){
+        if(mesJoueurs.at(0)->creerUnite(type)){
+          mesEntitesA.push_back(b->creerUnite(type));
+          return true;
+        }
       }
       return false;
     }
     case jB:
     {
       Base* b = dynamic_cast<Base*>(mesEntitesB.at(0));
-      if(mesJoueurs.at(1)->creerUnite(type)){
-        mesEntitesB.push_back(b->creerUnite(type));
-        return true;
+      if (mesEntitesB.back()->getPosition()!=11 || mesEntitesB.size()==1){
+        if(mesJoueurs.at(1)->creerUnite(type)){
+          mesEntitesB.push_back(b->creerUnite(type));
+          return true;
+        }
       }
       return false;
     }
@@ -88,7 +92,6 @@ struct _Cible* Terrain::cible(Unite* u) const{
             if(std::abs(e->getPosition()-u->getPosition())==distmin+1){
               cible->cible2 = e;
               cible->nb = 2;
-              std::cout << "#OUIT" << std::endl;
             }
             else cible->nb = 1;
           }
@@ -131,7 +134,18 @@ void Terrain::update(){
 }
 
 void Terrain::afficherTerrain(){
-
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
   std::cout << std::endl;
 
   //affichage or des joueurs
@@ -215,6 +229,25 @@ void Terrain::afficherTerrain(){
   std::cout << std::endl;
   std::cout << std::endl;
   std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+  std::cout << std::endl;
+
+  unsigned int usec = 500000;
+  usleep(usec);
 }
 
 void Terrain::payDay(){
@@ -278,28 +311,36 @@ void Terrain::effectuerTour(joueurEnum j){
         std::string f = "";
         std::string a = "";
         std::string c = "";
-        if(mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
-        if(mesJoueurs.at(0)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
-        if(mesJoueurs.at(0)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
-        std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
-        char unit;
-        std::cin >> unit;
+        char unit ='r';
+        if(mesJoueurs.at(0)->getType() == humain){
+          if(mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
+          if(mesJoueurs.at(0)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
+          if(mesJoueurs.at(0)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
+          std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
+          std::cin >> unit;
+        }
+        else if(mesJoueurs.at(0)->getType() == ia){
+          if(mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN) unit = 'f';
+          if(mesJoueurs.at(0)->getOr() >= PRIX_ARCHER) unit = 'a';
+          if(mesJoueurs.at(0)->getOr() >= PRIX_CATAPULTE) unit = 'c';
+        }
         switch (unit) {
           case 'f':
           {
-          creerUnite(jA, fantassin);
+          bool b = creerUnite(jA, fantassin);
+          if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
           break;
           }
           case 'a':
           {
           bool b = creerUnite(jA, archer);
-          if(!b) std::cout << "Vous n'avez000 pas assez d'argent !" << std::endl;
+          if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
           break;
           }
           case 'c':
           {
           bool b = creerUnite(jA, catapulte);
-          if(!b) std::cout << "Vous n'avez pas assez d'argent !" << std::endl;
+          if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
           break;
           }
           case 'r':
@@ -359,28 +400,36 @@ void Terrain::effectuerTour(joueurEnum j){
         std::string f = "";
         std::string a = "";
         std::string c = "";
-        if(mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
-        if(mesJoueurs.at(1)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
-        if(mesJoueurs.at(1)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
-        std::cout << "Joueur B : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
-        char unit;
-        std::cin >> unit;
+        char unit ='r';
+        if(mesJoueurs.at(1)->getType() == humain){
+          if(mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
+          if(mesJoueurs.at(1)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
+          if(mesJoueurs.at(1)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
+          std::cout << "Joueur B : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
+          std::cin >> unit;
+        }
+        else if(mesJoueurs.at(1)->getType() == ia){
+          if(mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN) unit = 'f';
+          if(mesJoueurs.at(1)->getOr() >= PRIX_ARCHER) unit = 'a';
+          if(mesJoueurs.at(1)->getOr() >= PRIX_CATAPULTE) unit = 'c';
+        }
         switch (unit) {
           case 'f':
           {
-          creerUnite(jB, fantassin);
+          bool b = creerUnite(jB, fantassin);
+          if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
           break;
           }
           case 'a':
           {
           bool b = creerUnite(jB, archer);
-          if(!b) std::cout << "Vous n'avez000 pas assez d'argent !" << std::endl;
+          if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
           break;
           }
           case 'c':
           {
           bool b = creerUnite(jB, catapulte);
-          if(!b) std::cout << "Vous n'avez pas assez d'argent !" << std::endl;
+          if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
           break;
           }
           case 'r':
@@ -585,7 +634,11 @@ int main(int argc, char * argv[]){
   /*int compt = 0;
   while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
     terrain.payDay();
+    std::cout << "Tour joueur A :" << std::endl;
+    usleep(1000000);
     terrain.effectuerTour(jA);
+    std::cout << "Tour joueur B :" << std::endl;
+    usleep(1000000);
     terrain.effectuerTour(jB);
     compt+=1;
   }

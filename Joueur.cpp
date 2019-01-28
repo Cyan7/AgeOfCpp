@@ -2,9 +2,14 @@
 #include <cstdlib>
 #include "Joueur.hpp"
 
-int Joueur::getOr(){
+int Joueur::getOr() const{
   return gold;
 }
+
+typeJoueur Joueur::getType() const{
+  return type;
+}
+
 void Joueur::setOr(int argent){
   gold=argent;
 }

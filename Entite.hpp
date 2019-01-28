@@ -1,6 +1,8 @@
 #ifndef ENTITE_H
 #define ENTITE_H
 
+#include <iomanip>
+
 enum joueurEnum { jA, jB };
 
 class Entite {
