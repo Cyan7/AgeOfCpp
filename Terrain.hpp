@@ -51,8 +51,8 @@ private:
 		}
 		else{
 			if (deuxJoueurs){
-				Humain* joueurA = new Humain();
-				Humain* joueurB = new Humain();
+				Joueur* joueurA = new Joueur(humain);
+				Joueur* joueurB = new Joueur(humain);
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
 				this->lireSauvegarde(fichierSauvegarde);
@@ -62,8 +62,8 @@ private:
 				mesEntitesB.push_back(baseB);*/
 			}
 			if (!deuxJoueurs){
-				Humain* joueurA = new Humain();
-				IA* joueurB = new IA();
+				Joueur* joueurA = new Joueur(humain);
+				Joueur* joueurB = new Joueur(ia);
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
 				this->lireSauvegarde(fichierSauvegarde);
@@ -79,6 +79,7 @@ private:
 
 
 	public :
+		Terrain(){}
 		~Terrain(){}
 
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);

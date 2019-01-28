@@ -267,6 +267,13 @@ void Terrain::effectuerTour(joueurEnum j){
         Unite* u = dynamic_cast<Unite*>(mesEntitesA.at(i));
         struct _Cible* c = cible(u);
         u->phase1(c);
+        if(c->cible1){
+          if(c->cible1->getPV() <= 0){
+            if(Fantassin* f = dynamic_cast<Fantassin*>(u)){
+              if(dynamic_cast<Fantassin*>(c->cible1)) f->promouvoir();
+            }
+          }
+        }
         update();
         if(Bloose) break;
       }
@@ -316,8 +323,16 @@ void Terrain::effectuerTour(joueurEnum j){
           if(mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
           if(mesJoueurs.at(0)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
           if(mesJoueurs.at(0)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
-          std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
+          std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << " r - Ne rieng faire" << " s - Sauvegarder" << std::endl;
           std::cin >> unit;
+          if(unit=='s'){
+            std::string name;
+            std::cout << "Entrez le nom du fichier de sauvegarde" << std::endl;
+            std::cin >> name;
+            sauvegarder(name);
+            std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << " r - Ne rieng faire" << std::endl;
+            std::cin >> unit;
+          }
         }
         else if(mesJoueurs.at(0)->getType() == ia){
           if(mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN) unit = 'f';
@@ -358,6 +373,13 @@ void Terrain::effectuerTour(joueurEnum j){
         Unite* u = dynamic_cast<Unite*>(mesEntitesB.at(i));
         struct _Cible* c = cible(u);
         u->phase1(c);
+        if(c->cible1){
+          if(c->cible1->getPV() <= 0){
+            if(Fantassin* f = dynamic_cast<Fantassin*>(u)){
+              if(dynamic_cast<Fantassin*>(c->cible1)) f->promouvoir();
+            }
+          }
+        }
         update();
         if(Aloose) break;
       }
@@ -405,8 +427,16 @@ void Terrain::effectuerTour(joueurEnum j){
           if(mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN) f = "f - Fantassin,";
           if(mesJoueurs.at(1)->getOr() >= PRIX_ARCHER) a = "a - Archer,";
           if(mesJoueurs.at(1)->getOr() >= PRIX_CATAPULTE) c = "c - Catapulte,";
-          std::cout << "Joueur B : Vous pouvez créer : " << f << " " << a << " " << c << "r - Ne rieng faire" << std::endl;
+          std::cout << "Joueur B : Vous pouvez créer : " << f << " " << a << " " << c << " r - Ne rieng faire" << " s - Sauvegarder" << std::endl;
           std::cin >> unit;
+          if(unit=='s'){
+            std::string name;
+            std::cout << "Entrez le nom du fichier de sauvegarde" << std::endl;
+            std::cin >> name;
+            sauvegarder(name);
+            std::cout << "Joueur A : Vous pouvez créer : " << f << " " << a << " " << c << " r - Ne rieng faire" << std::endl;
+            std::cin >> unit;
+          }
         }
         else if(mesJoueurs.at(1)->getType() == ia){
           if(mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN) unit = 'f';
@@ -430,6 +460,14 @@ void Terrain::effectuerTour(joueurEnum j){
           {
           bool b = creerUnite(jB, catapulte);
           if(!b) std::cout << "Vous ne pouvez pas construire cette unité" << std::endl;
+          break;
+          }
+          case 's':
+          {
+          std::string name;
+          std::cout << "Entrez le nom du fichier de sauvegarde" << std::endl;
+          std::cin >> name;
+          sauvegarder(name);
           break;
           }
           case 'r':
@@ -502,6 +540,7 @@ void Terrain::sauvegarder(std::string nomFichier){
 void Terrain::lireSauvegarde(std::string nomFichier){
   std::string line;
   std::ifstream sauv(nomFichier);
+  if(sauv.is_open()){
   int joueur = 0;
   //récupération des paramètres des joueurs A et B
   while (getline(sauv,line,'.') && joueur<2){
@@ -598,40 +637,47 @@ void Terrain::lireSauvegarde(std::string nomFichier){
       joueur+=1;
   }
   sauv.close();
+  
+}
+else{
+  std::cout << "La lecture du fichier de sauvegarde a échoué" << std::endl;
+}
 }
 
 
 /* MAIN */
-int main(int argc, char * argv[]){
-  //Ma maison
-  Terrain terrain = Terrain::getInstance(true, false, "");
-  /*for (Entite* e : terrain.mesEntitesA){
-    if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
-      std::cout << "eA : " << f->getPV() << ", " << f->getPosition() << ", " << f->isSuperSoldat() << std::endl;
-    }
-    else{std::cout << "eA : " << e->getPV() << ", " << e->getPosition() << std::endl;}
-  }
-  for (Entite* e : terrain.mesEntitesB){
-    if(Fantassin *f = dynamic_cast<Fantassin*>(e)){
-      std::cout << "eB : " << f->getPV() << ", " << f->getPosition() << ", " << f->isSuperSoldat() << std::endl;
-    }
-    else{std::cout << "eB : " << e->getPV() << ", " << e->getPosition() << std::endl;}
-  }*/
-  terrain.mesJoueurs.at(0)->setOr(100);
-  joueurEnum jouA = jA;
-  joueurEnum jouB = jB;
-  unitEnum fA = fantassin;
-  terrain.creerUnite(jouA,fA);
-  terrain.afficherTerrain();
-  terrain.update();
-  terrain.afficherTerrain();
+int main(){
+  Terrain terrain;
+  //menu
+  std::cout << "Un ou deux joueurs ? (taper '1' ou '2')" << std::endl;
+  char jou;
+  std::cin >> jou;
+  std::cout << "Voulez-vous charger une partie ? (y/n)" << std::endl;
+  char charger;
+  std::cin >> charger;
 
-  terrain.sauvegarder("sauvegarde.txt");
-  //terrain.lireSauvegarde("sauvegarde.txt");*/
-  //Terrain terrain = Terrain::getInstance(true, false, "");
+  if(charger=='y'){
+    std::cout << "Entrez le nom du fichier" << std::endl;
+    std::string nom;
+    std::cin >> nom;
+    if(jou=='1'){
+      terrain = Terrain::getInstance(false, true, nom);
+    }
+    else{
+      terrain = Terrain::getInstance(true, true, nom);
+    }
+  }
+  else{
+    if(jou=='1'){
+      terrain = Terrain::getInstance(false, false, "");
+    }
+    else{
+      terrain = Terrain::getInstance(true, false, "");
+    }
+  }
 
   //Lancement du jeu
-  /*int compt = 0;
+  int compt = 0;
   while(!terrain.getAloose() && !terrain.getBloose() && compt<100){
     terrain.payDay();
     std::cout << "Tour joueur A :" << std::endl;
@@ -644,6 +690,6 @@ int main(int argc, char * argv[]){
   }
   if(terrain.getAloose()) std::cout << "A wasted" << std::endl;
   if(terrain.getBloose()) std::cout << "B wasted" << std::endl;
-  if(!terrain.getAloose() && !terrain.getBloose()) std::cout << "Let's call it a draw" << std::endl;*/
+  if(!terrain.getAloose() && !terrain.getBloose()) std::cout << "Oups" << std::endl;
   return 0;
 }
