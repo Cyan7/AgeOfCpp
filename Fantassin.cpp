@@ -5,7 +5,7 @@
 #include "Entite.hpp"
 
 
-bool Fantassin::isSuperSoldat(){
+bool Fantassin::isSuperSoldat() const{
   return superSoldat;
 }
 

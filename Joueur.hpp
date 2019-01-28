@@ -1,5 +1,4 @@
-#ifndef JOUEUR_H
-#define JOUEUR_H
+#pragma once
 #include "Unite.hpp"
 
 #define PRIX_FANTASSIN (10)
@@ -14,13 +13,12 @@ class Joueur{
 
 public:
   Joueur(typeJoueur tJ):gold(10), type(tJ){}
-  Joueur(int argent, typeJoueur tJ):gold(argent), type(tJ){}
+  //Joueur(int argent, typeJoueur tJ):gold(argent), type(tJ){}
   ~Joueur(){}
 
   int getOr() const;
   typeJoueur getType() const;
   void setOr(int argent);
+
   bool creerUnite(unitEnum type);
 };
-
-#endif

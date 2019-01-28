@@ -13,16 +13,13 @@
 #define SALAIRE (8)
 
 class Terrain{
-	bool Aloose;
-	bool Bloose;
+	bool Aloose, Bloose;
 	static Terrain *monTerrain;
 
-	public :
 	std::vector<Entite*> mesEntitesA;
 	std::vector<Entite*> mesEntitesB;
 	std::vector<Joueur*> mesJoueurs;
 
-private:
 	Terrain(bool deuxJoueurs, bool charger, std::string fichierSauvegarde){
 		Aloose = false;
 		Bloose = false;
@@ -56,10 +53,6 @@ private:
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
 				this->lireSauvegarde(fichierSauvegarde);
-				/*Base* baseA = new Base(jA);
-				Base* baseB = new Base(jB);
-				mesEntitesA.push_back(baseA);
-				mesEntitesB.push_back(baseB);*/
 			}
 			if (!deuxJoueurs){
 				Joueur* joueurA = new Joueur(humain);
@@ -67,10 +60,6 @@ private:
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
 				this->lireSauvegarde(fichierSauvegarde);
-				/*Base* baseA = new Base(jA);
-				Base* baseB = new Base(jB);
-				mesEntitesA.push_back(baseA);
-				mesEntitesB.push_back(baseB);*/
 			}
 		}
 
@@ -83,8 +72,8 @@ private:
 		~Terrain(){}
 
 		static Terrain getInstance(bool deuxJoueurs, bool charger, std::string fichierSauvegarde);
-		bool getAloose(){return Aloose;}
-		bool getBloose(){return Bloose;}
+		bool getAloose() const {return Aloose;}
+		bool getBloose() const {return Bloose;}
 		bool creerUnite(joueurEnum j, unitEnum type);
 		void update();
 		struct _Cible* cible(Unite* u) const;

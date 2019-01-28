@@ -1,5 +1,4 @@
-#ifndef ENTITE_H
-#define ENTITE_H
+#pragma once
 
 #include <iomanip>
 
@@ -12,11 +11,8 @@ protected:
 
 
 public :
-int estBase;
-  //constructeur
   Entite(){}
   Entite(int ptVie, int posi, joueurEnum j) : pv(ptVie), position(posi), joueur(j){}
-  //destructeur
   virtual ~Entite(){}
 
   //getters et setters
@@ -37,5 +33,3 @@ struct _Cible{
 	Entite* cible1;
 	Entite* cible2;
 };
-
-#endif

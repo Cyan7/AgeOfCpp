@@ -314,7 +314,7 @@ void Terrain::effectuerTour(joueurEnum j){
       if(Bloose) break;
 
       // Création ?
-      if(mesEntitesA.back()->getPosition() != 0 || mesEntitesA.back()->estBase || mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN){
+      if((mesEntitesA.back()->getPosition() != 0 || dynamic_cast<Base*>(mesEntitesA.back())) && mesJoueurs.at(0)->getOr() >= PRIX_FANTASSIN){
         std::string f = "";
         std::string a = "";
         std::string c = "";
@@ -418,7 +418,7 @@ void Terrain::effectuerTour(joueurEnum j){
       }
       afficherTerrain();
       // Création ?
-      if(mesEntitesB.back()->getPosition() != 0 || mesEntitesB.back()->estBase || mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN){
+      if((mesEntitesB.back()->getPosition() != 0 || dynamic_cast<Base*>(mesEntitesB.back())) && mesJoueurs.at(1)->getOr() >= PRIX_FANTASSIN){
         std::string f = "";
         std::string a = "";
         std::string c = "";
@@ -637,7 +637,7 @@ void Terrain::lireSauvegarde(std::string nomFichier){
       joueur+=1;
   }
   sauv.close();
-  
+
 }
 else{
   std::cout << "La lecture du fichier de sauvegarde a échoué" << std::endl;

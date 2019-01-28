@@ -1,5 +1,4 @@
-#ifndef FANTASSIN_H
-#define FANTASSIN_H
+#pragma once
 #include "Unite.hpp"
 #include "Entite.hpp"
 
@@ -15,7 +14,7 @@ public:
     }
   ~Fantassin(){}
 
-  bool isSuperSoldat();
+  bool isSuperSoldat() const;
 
   void promouvoir();
 
@@ -24,5 +23,3 @@ public:
   void phase2();
   void phase3(struct _Cible* c);
 };
-
-#endif

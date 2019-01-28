@@ -1,5 +1,4 @@
-#ifndef CATAPULTE_H
-#define CATAPULTE_H
+#pragma once
 #include "Unite.hpp"
 #include "Entite.hpp"
 
@@ -17,5 +16,3 @@ public:
   void phase2();
   void phase3(struct _Cible* c);
 };
-
-#endif
