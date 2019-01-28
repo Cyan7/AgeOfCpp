@@ -3,14 +3,14 @@
 #include "Catapulte.hpp"
 
 void Catapulte::afficher(){
-  std::string team = joueur == jA ? "A" : "B";
+  std::string team = joueur == jA ? "\033[34m" : "\033[31m";
   if (this->position!=0 && this->position != 11){
-    std::string perso = "Cat" + team;
-    std::cout << perso;
+    //std::cout << std::setw(7) << std::left;
+    std::cout << team + "Cat    \033[0m";
   }
   else {
-    std::string perso = "|Cat" + team + "|";
-    std::cout << perso;
+    //std::cout << std::setw(7) << std::left;
+    std::cout << "|" + team + "Cat \033[0m| ";
   }
 }
 

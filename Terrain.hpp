@@ -2,14 +2,13 @@
 #include <vector>
 #include "Joueur.hpp"
 #include "Entite.hpp"
-#include "IA.hpp"
-#include "Humain.hpp"
 #include "Base.hpp"
 #include "Unite.hpp"
 #include "Fantassin.hpp"
 #include "Archer.hpp"
 #include "Catapulte.hpp"
 #include <string>
+#include <unistd.h>
 
 #define SALAIRE (8)
 
@@ -30,8 +29,8 @@ private:
 
 		if (!charger){
 			if (deuxJoueurs){
-				Humain* joueurA = new Humain();
-				Humain* joueurB = new Humain();
+				Joueur* joueurA = new Joueur(humain);
+				Joueur* joueurB = new Joueur(humain);
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
 				Base* baseA = new Base(jA);
@@ -40,8 +39,8 @@ private:
 				mesEntitesB.push_back(baseB);
 			}
 			if (!deuxJoueurs){
-				Humain* joueurA = new Humain();
-				IA* joueurB = new IA();
+				Joueur* joueurA = new Joueur(humain);
+				Joueur* joueurB = new Joueur(ia);
 				mesJoueurs.push_back(joueurA);
 				mesJoueurs.push_back(joueurB);
 				Base* baseA = new Base(jA);
