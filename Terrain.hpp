@@ -49,6 +49,30 @@ private:
 				mesEntitesB.push_back(baseB);
 			}
 		}
+		else{
+			if (deuxJoueurs){
+				Humain* joueurA = new Humain();
+				Humain* joueurB = new Humain();
+				mesJoueurs.push_back(joueurA);
+				mesJoueurs.push_back(joueurB);
+				this->lireSauvegarde(fichierSauvegarde);
+				/*Base* baseA = new Base(jA);
+				Base* baseB = new Base(jB);
+				mesEntitesA.push_back(baseA);
+				mesEntitesB.push_back(baseB);*/
+			}
+			if (!deuxJoueurs){
+				Humain* joueurA = new Humain();
+				IA* joueurB = new IA();
+				mesJoueurs.push_back(joueurA);
+				mesJoueurs.push_back(joueurB);
+				this->lireSauvegarde(fichierSauvegarde);
+				/*Base* baseA = new Base(jA);
+				Base* baseB = new Base(jB);
+				mesEntitesA.push_back(baseA);
+				mesEntitesB.push_back(baseB);*/
+			}
+		}
 
 
 	}
@@ -68,5 +92,6 @@ private:
 		void effectuerTour(joueurEnum j);
 
  		void sauvegarder(std::string nomFichier);
+		void lireSauvegarde(std::string nomFichier);
 
 };
